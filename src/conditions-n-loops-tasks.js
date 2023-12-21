@@ -231,8 +231,15 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let str2 = '';
+  for (let i = 0; i < str.length; i += 1) {
+    str2 += str[str.length - 1 - i];
+  }
+  if (str === str2) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -273,8 +280,15 @@ function getIndexOf(str, letter) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const str = String(num);
+  const digitStr = String(digit);
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === digitStr) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -290,8 +304,19 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let sum1 = 0;
+  for (let i = 0; i < arr.length - 2; i += 1) {
+    sum1 += arr[i];
+    let sum2 = 0;
+    for (let j = i + 2; j < arr.length; j += 1) {
+      sum2 += arr[j];
+    }
+    if (sum1 === sum2) {
+      return i + 1;
+    }
+  }
+  return -1;
 }
 
 /**
