@@ -340,8 +340,52 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+  ];
+  const n = size * size;
+
+  const matrix = new Array(size);
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = new Array(size);
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+
+  let x = 0;
+  let y = 0;
+  let numb = 1;
+  matrix[x][y] = numb;
+  let curr = 0;
+  while (numb < n) {
+    numb += 1;
+    if (
+      x + directions[curr][0] < size &&
+      x + directions[curr][0] >= 0 &&
+      y + directions[curr][1] < size &&
+      y + directions[curr][1] >= 0 &&
+      matrix[x + directions[curr][0]][y + directions[curr][1]] === 0
+    ) {
+      x += directions[curr][0];
+      y += directions[curr][1];
+      matrix[x][y] = numb;
+    } else {
+      if (curr < 3) {
+        curr += 1;
+      } else {
+        curr = 0;
+      }
+      x += directions[curr][0];
+      y += directions[curr][1];
+      matrix[x][y] = numb;
+    }
+  }
+  return matrix;
 }
 
 /**
@@ -359,8 +403,30 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const arr = matrix;
+
+  const size = matrix.length;
+  const newMatrix = new Array(size);
+  for (let i = 0; i < size; i += 1) {
+    newMatrix[i] = new Array(size);
+    for (let j = 0; j < size; j += 1) {
+      newMatrix[i][j] = 0;
+    }
+  }
+
+  for (let i = size - 1; i >= 0; i -= 1) {
+    for (let j = 0; j < size; j += 1) {
+      newMatrix[j][size - 1 - i] = matrix[i][j];
+    }
+  }
+
+  for (let i = 0; i < size; i += 1) {
+    for (let j = 0; j < size; j += 1) {
+      arr[i][j] = newMatrix[i][j];
+    }
+  }
+  return arr;
 }
 
 /**
@@ -400,6 +466,23 @@ function sortByAsc(/* arr */) {
  */
 function shuffleChar(/* str, iterations */) {
   throw new Error('Not implemented');
+  // let count = 1;
+  // let currString = str;
+
+  // while (count <= iterations) {
+  //   let start = '';
+  //   let tail = '';
+  //   for (let i = 1; i < currString.length; i += 1) {
+  //     if (i % 2 === 0) {
+  //       start += currString[i];
+  //     } else {
+  //       tail += currString[i];
+  //     }
+  //   }
+  //   currString = currString[0] + start + tail;
+  //   count += 1;
+  // }
+  // return currString;
 }
 
 /**
