@@ -443,8 +443,35 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const resArr = arr;
+
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const baseElem = arr[arr.length - 1];
+  const left = [];
+  const right = [];
+  let indLeft = 0;
+  let indRight = 0;
+
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    if (arr[i] < baseElem) {
+      left[indLeft] = arr[i];
+      indLeft += 1;
+    } else {
+      right[indRight] = arr[i];
+      indRight += 1;
+    }
+  }
+  const result = [...sortByAsc(left), baseElem, ...sortByAsc(right)];
+
+  for (let i = 0; i < result.length; i += 1) {
+    resArr[i] = result[i];
+  }
+
+  return resArr;
 }
 
 /**
@@ -464,25 +491,30 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
-  // let count = 1;
-  // let currString = str;
+function shuffleChar(str, iterations) {
+  let count = 1;
+  let currString = str;
+  const iterationObj = {};
 
-  // while (count <= iterations) {
-  //   let start = '';
-  //   let tail = '';
-  //   for (let i = 1; i < currString.length; i += 1) {
-  //     if (i % 2 === 0) {
-  //       start += currString[i];
-  //     } else {
-  //       tail += currString[i];
-  //     }
-  //   }
-  //   currString = currString[0] + start + tail;
-  //   count += 1;
-  // }
-  // return currString;
+  while (count <= iterations) {
+    let start = '';
+    let tail = '';
+    for (let i = 1; i < currString.length; i += 1) {
+      if (i % 2 === 0) {
+        start += currString[i];
+      } else {
+        tail += currString[i];
+      }
+    }
+    currString = currString[0] + start + tail;
+    iterationObj[count] = currString;
+    if (currString === str) {
+      const iteration = iterations % count;
+      return iterationObj[iteration];
+    }
+    count += 1;
+  }
+  return currString;
 }
 
 /**
@@ -502,8 +534,38 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const arr = [];
+  const strFromNumber = String(number);
+  for (let i = 0; i < strFromNumber.length; i += 1) {
+    arr[i] = +strFromNumber[i];
+  }
+  const right = [arr[arr.length - 1]];
+  for (let i = arr.length - 1; i >= 1; i -= 1) {
+    if (arr[i - 1] >= arr[i]) {
+      right.push(arr[i - 1]);
+    } else {
+      const temp = arr[i - 1];
+      right.sort();
+      for (let j = 0; j < right.length; j += 1) {
+        if (right[j] > temp) {
+          arr[i - 1] = right[j];
+          right[j] = temp;
+          break;
+        }
+      }
+
+      let newStr = '';
+      for (let k = 0; k <= i - 1; k += 1) {
+        newStr += arr[k];
+      }
+      for (let k = 0; k < right.length; k += 1) {
+        newStr += right[k];
+      }
+      return +newStr;
+    }
+  }
+  return number;
 }
 
 module.exports = {
